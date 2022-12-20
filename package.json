@@ -1,8 +1,9 @@
 {
   "name": "@texture-finance/solana-flash-loan-sdk",
-  "version": "0.0.4-beta-5",
+  "version": "0.0.6",
   "description": "Solana flash loan SDK",
   "keywords": ["solana", "flash-loan", "texture"],
+  "repository": "https://github.com/texture-finance/flash-loan-sdk-ts",
   "main": "./build/index.js",
   "files": [
     "build/",

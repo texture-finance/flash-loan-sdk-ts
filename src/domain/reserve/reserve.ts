@@ -30,8 +30,6 @@ enum FeeCalculation {
     Inclusive,
 }
 
-type Fees = { borrowFee: number, textureFee: number };
-
 interface Meta {
     pubkey: PublicKey;
     isSigner: boolean;
@@ -41,7 +39,7 @@ interface Meta {
 export class Reserve {
     constructor(
         private readonly data: ReserveData,
-        private readonly pubkey: PublicKey,
+        public readonly pubkey: PublicKey,
     ) {}
 
     public fee(amount: number, feeCalculation: FeeCalculation = FeeCalculation.Exclusive): number {

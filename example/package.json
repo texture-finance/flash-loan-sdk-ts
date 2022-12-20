@@ -1,25 +1,26 @@
 {
   "name": "@texture-finance/solana-flash-loan-sdk-example",
-  "version": "0.0.1-beta-1",
+  "version": "0.0.4",
   "description": "example for @texture-finance/solana-flash-loan-sdk",
   "keywords": ["solana", "flash-loan", "texture"],
-  "main": "./build/index.js",
+  "repository": "https://github.com/texture-finance/flash-loan-sdk-ts",
+  "main": "build/index.ts",
   "files": [
-    "index.ts",
+    "build",
+    "src",
     "tsconfig.json",
-    "webpack.config.js"
+    "webpack.config.js",
+    "webpack.server.js"
   ],
-  "bin": {
-    "@texture-finance/solana-flash-loan-sdk": "./start.sh"
-  },
   "scripts": {
+    "build": "npx webpack -c ./webpack.config.js",
     "example": "npx webpack serve -c ./webpack.config.js"
   },
   "license": "ISC",
   "dependencies": {
     "babel-loader": "^9.1.0",
     "html-webpack-plugin": "^5.5.0",
-    "@texture-finance/solana-flash-loan-sdk": "0.0.4-beta-5",
+    "@texture-finance/solana-flash-loan-sdk": "0.0.6",
     "@solana/spl-token": "^0.3.6",
     "@solana/web3.js": "^1.70.0",
     "@solana/wallet-adapter-base": "0.9.5",

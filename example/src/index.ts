@@ -1,9 +1,16 @@
-import {Connection, clusterApiUrl, LAMPORTS_PER_SOL, PublicKey, Transaction, SystemProgram} from '@solana/web3.js';
+import {
+    Connection,
+    clusterApiUrl,
+    LAMPORTS_PER_SOL,
+    PublicKey,
+    Transaction,
+    SystemProgram,
+} from '@solana/web3.js';
 import {
     TOKEN_PROGRAM_ID,
     ASSOCIATED_TOKEN_PROGRAM_ID,
-    createAssociatedTokenAccountInstruction,
     NATIVE_MINT,
+    createAssociatedTokenAccountInstruction,
     createSyncNativeInstruction,
 } from '@solana/spl-token';
 import { SolflareWalletAdapter } from '@solana/wallet-adapter-solflare';
@@ -17,10 +24,12 @@ const accountService = new AccountService(connection);
 /**
  * get all reserves
  */
-accountService.getAllReserves(FLASH_LOAN_ID).then((reserves) => {
+accountService.getAllReserves(FLASH_LOAN_ID).then((reserves: Reserve[]) => {
     reserves.map((reserve: Reserve) => {
-        console.log(reserve.fee(LAMPORTS_PER_SOL * 10));
-        console.log(reserve.availableLiquidity());
+        console.log('============================================');
+        console.log(reserve.pubkey.toBase58());
+        console.log('fee', reserve.fee(LAMPORTS_PER_SOL * 10));
+        console.log('available liquidity', reserve.availableLiquidity());
     })
 });
 
@@ -30,14 +39,14 @@ accountService.getAllReserves(FLASH_LOAN_ID).then((reserves) => {
  */
 document.getElementById('button')?.addEventListener('click', () => {
 
-    const reserveId = new PublicKey('9Wys2sCHcAGZm3jgSnfP8xyq1ZiK2qthQ4Ki5fSdkqP');
+    const RESERVE_ID = new PublicKey('9Wys2sCHcAGZm3jgSnfP8xyq1ZiK2qthQ4Ki5fSdkqP');
     Promise.all([
-        accountService.getReserveInfo(new PublicKey('9Wys2sCHcAGZm3jgSnfP8xyq1ZiK2qthQ4Ki5fSdkqP')),
+        accountService.getReserveInfo(RESERVE_ID),
         walletAdapter.connect(),
     ]).then(async ([reserve]: [Reserve, void]) => {
         if (reserve && walletAdapter.publicKey) {
             const amount = BigInt(LAMPORTS_PER_SOL * 0.01);
-            console.log('borrowFee', reserve.fee(Number(amount)) / LAMPORTS_PER_SOL);
+
             const [token] = PublicKey.findProgramAddressSync(
                 [walletAdapter.publicKey.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), NATIVE_MINT.toBuffer()],
                 ASSOCIATED_TOKEN_PROGRAM_ID
@@ -54,7 +63,7 @@ document.getElementById('button')?.addEventListener('click', () => {
              * sync transfer
              */
             // await connection.requestAirdrop(walletAdapter.publicKey, LAMPORTS_PER_SOL); // airdrop 1 SOL
-
+            //
             // const accountIx = await createAssociatedTokenAccountInstruction(
             //     walletAdapter.publicKey,
             //     token,

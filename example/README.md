@@ -15,5 +15,5 @@ yarn add @texture-finance/solana-flash-loan-sdk-example
 
 ```shell
 npm install 
-npm run example 
+npx @texture-finance/solana-flash-loan-sdk-example
 ```

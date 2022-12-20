@@ -7,10 +7,10 @@ const VERSION = pkg.version;
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './index.ts',
+  entry: './src/index.ts',
   devServer: {
     static: {
-      directory: path.join(process.cwd(), 'build'),
+      directory: path.join(process.cwd(), 'public'),
     },
     client: {
       progress: true,
@@ -52,13 +52,13 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: path.resolve(process.cwd(), './public/index.html'),
-    }),
     new ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.resolve(process.cwd(), './public/index.html'),
+    })
   ],
   output: {
     filename: `index.js?v=${VERSION}`,
